@@ -55,8 +55,16 @@ export default class IndexPage extends Component {
   }
 
   async youtubeSearch(track) {
-    const searchTerms = track.track.name;
+    let searchTerms = [track.track.name];
+
+    track.track.artists.map((artist) => {
+      searchTerms.push(artist.name)
+    })
+
+    searchTerms.push("Official Music Video");
+
     const data = await search(searchTerms);
+    console.log(data);
     if (data.items.length) {
       this.setState({
         video: data.items[0],
@@ -113,39 +121,45 @@ export default class IndexPage extends Component {
           }
 
           { this.state.step === 3 &&
-            <div className="flex">
-              <div className="w-1/2 bg-grey-light">
-                <p className="leading-loose">
-                  Have have selected : {this.state.playlistSelected.name}
-                </p>
-                {
-                  this.state.playlistSelectedTracks.map(function(track, index) {
-                    return (
-                      <div className="pb-10" key={index} onClick={() => this.youtubeSearch(track)}>
-                        <div>{track.track.name}</div>
-                        <div>
-                        {
-                          track.track.artists.map(function(artist, index) {
-                            return (
-                              <div key={index}>{artist.name}</div>
-                            )
-                          },this)
-                        }
+            <div>
+              <p className="leading-loose">
+                You have selected : {this.state.playlistSelected.name}
+              </p>
+              <div className="flex">
+                <div className="w-1/2">
+                  { this.state.video &&
+                    <div className="fixed">
+                      { this.state.video.snippet.title }
+                      <YouTube
+                        videoId={this.state.video.id.videoId}
+                        opts={{
+                          width: 300,
+                          height: 200,
+                        }}
+                      />
+                    </div>
+                  }
+                </div>
+                <div className="w-1/2">
+                  {
+                    this.state.playlistSelectedTracks.map(function(track, index) {
+                      return (
+                        <div className="pb-10" key={index} onClick={() => this.youtubeSearch(track)}>
+                          <div>{track.track.name}</div>
+                          <div>
+                          {
+                            track.track.artists.map(function(artist, index) {
+                              return (
+                                <div key={index}>{artist.name}</div>
+                              )
+                            },this)
+                          }
+                          </div>
                         </div>
-                      </div>
-                    )
-                  }, this)
-                }
-              </div>
-              <div className="w-1/2 bg-grey-dark">
-                { this.state.video &&
-                  <div>
-                    { this.state.video.snippet.title }
-                    <YouTube
-                      videoId={this.state.video.id.videoId}
-                    />
-                  </div>
-                }
+                      )
+                    }, this)
+                  }
+                </div>
               </div>
             </div>
           }

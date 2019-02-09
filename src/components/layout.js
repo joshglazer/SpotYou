@@ -12,13 +12,14 @@ const Layout = ({ children }) => (
         site {
           siteMetadata {
             title
+            description
           }
         }
       }
     `}
     render={data => (
       <div className="flex flex-col font-sans min-h-screen text-grey-darkest">
-        <Header siteTitle={data.site.siteMetadata.title} />
+        <Header siteTitle={data.site.siteMetadata.title} siteDescription={data.site.siteMetadata.description} />
 
         <div className="flex flex-col flex-1 md:justify-center max-w-xl mx-auto px-4 py-8 md:p-8 w-full">
           {children}
@@ -27,21 +28,24 @@ const Layout = ({ children }) => (
         <footer className="bg-blue">
           <div className="flex justify-between max-w-xl mx-auto p-4 md:p-8 text-sm">
             <p className="text-white">
-              Created by{' '}
+              A {' '}
               <a
-                href="https://taylorbryant.blog"
+                href="https://www.linkedin.com/in/joshglazer/"
                 className="font-bold no-underline text-white"
+                target="_blank"
               >
-                Taylor Bryant
+                Josh Glazer
               </a>
+              {' '} Project
             </p>
 
             <p>
               <a
-                href="https://github.com/taylorbryant/gatsby-starter-tailwind"
+                href="https://github.com/joshglazer/SpotYou"
                 className="font-bold no-underline text-white"
+                target="_blank"
               >
-                GitHub
+                Source Code on GitHub
               </a>
             </p>
           </div>
