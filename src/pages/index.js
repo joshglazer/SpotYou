@@ -111,7 +111,7 @@ export default class IndexPage extends Component {
                       {
                         track.track.artists.map(function(artist, index) {
                           return (
-                            <div>{artist.name}</div>
+                            <div key={index}>{artist.name}</div>
                           )
                         },this)
                       }
