@@ -5,15 +5,7 @@ import SEO from '../components/seo'
 
 import queryString from 'query-string';
 
-// Source for following API endpoint
-// https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow
-// TODO: implement state parameter
-
-const spotifyClientID = 'b31cb61c491840d69d23ff47bcbf3850';
-const redirectURI = 'http://localhost:8000/';
-const scope = 'playlist-read-private';
-const spotifyURL = `https://accounts.spotify.com/authorize?client_id=${spotifyClientID}&redirect_uri=${redirectURI}&scope=${scope}&response_type=token`
-
+import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 
 export default class IndexPage extends Component {
   constructor(props) {
@@ -22,6 +14,7 @@ export default class IndexPage extends Component {
     let step = 1;
     let accessToken = null;
 
+    // handle Spotify authroization flow
     const parsedHash = queryString.parse(this.props.location.hash);
     if (parsedHash['access_token']) {
       step = 2;
@@ -32,27 +25,30 @@ export default class IndexPage extends Component {
       step: step,
       accessToken: accessToken,
       playlists: [],
+      playlistSelected: null,
+      playlistSelectedTracks: [],
     }
+
+    this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
 
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (this.state.accessToken) {
-      const spotifyPlaylistUrl = 'https://api.spotify.com/v1/me/playlists';
-      fetch(spotifyPlaylistUrl, {
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${this.state.accessToken}`,
-        }
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-          console.log(responseData);
-        this.setState({
-          playlists: responseData.items,
-        });
-      })
+      const playlists = await getPlaylists(this.state.accessToken);
+      this.setState({
+        playlists: playlists,
+      });
     }
+  }
+
+  async handlePlaylistClick(playlist) {
+    const tracks = await getPlaylistTracks(this.state.accessToken, playlist.tracks.href);
+    this.setState({
+      step: 3,
+      playlistSelected: playlist,
+      playlistSelectedTracks: tracks,
+    });
   }
 
   render() {
@@ -76,7 +72,7 @@ export default class IndexPage extends Component {
               </p>
 
               <a
-                href={spotifyURL}
+                href={authorizeUrl()}
               >
                 Connect your Spotify Account!
               </a>
@@ -91,11 +87,38 @@ export default class IndexPage extends Component {
               {
                 this.state.playlists.map(function(playlist, index) {
                   return (
-                    <div key={index}>
-                      <img src={playlist.images[0].url} style={{maxHeight: 100}}/>
+                    <div key={index} onClick={() => this.handlePlaylistClick(playlist)}>
+                      <div>{playlist.name}</div>
+                      <img src={playlist.images[0].url} style={{maxHeight: 100}} alt={playlist.name}/>
                     </div>
                   )
-                })
+                }, this)
+              }
+            </div>
+          }
+
+          { this.state.step === 3 &&
+            <div>
+              <p className="leading-loose">
+                Have have selected : {this.state.playlistSelected.name}
+              </p>
+              {
+                this.state.playlistSelectedTracks.map(function(track, index) {
+                  return (
+                    <div key={index}>
+                      <div>{track.track.name}</div>
+                      <div>
+                      {
+                        track.track.artists.map(function(artist, index) {
+                          return (
+                            <div>{artist.name}</div>
+                          )
+                        },this)
+                      }
+                      </div>
+                    </div>
+                  )
+                }, this)
               }
             </div>
           }
