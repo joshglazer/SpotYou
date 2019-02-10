@@ -2,13 +2,6 @@ import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const handleClick = ev => {
-  ev.preventDefault()
-  const element = document.getElementById('nav')
-  element.classList.toggle('block')
-  element.classList.toggle('hidden')
-}
-
 const Header = ({ siteTitle, siteDescription }) => (
   <nav className="bg-blue-light">
     <div className="flex flex-wrap items-center justify-between max-w-xl mx-auto p-4 md:p-8">

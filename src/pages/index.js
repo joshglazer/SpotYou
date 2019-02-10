@@ -58,7 +58,7 @@ export default class IndexPage extends Component {
     let searchTerms = [track.track.name];
 
     track.track.artists.map((artist) => {
-      searchTerms.push(artist.name)
+      return searchTerms.push(artist.name);
     })
 
     searchTerms.push("Official Music Video");
@@ -95,7 +95,7 @@ export default class IndexPage extends Component {
               </p>
 
               <a
-                href={authorizeUrl()}
+                href={authorizeUrl(this.props.location)}
               >
                 Connect your Spotify Account!
               </a>

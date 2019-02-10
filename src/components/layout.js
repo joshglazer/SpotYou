@@ -33,6 +33,7 @@ const Layout = ({ children }) => (
                 href="https://www.linkedin.com/in/joshglazer/"
                 className="font-bold no-underline text-white"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Josh Glazer
               </a>
@@ -44,6 +45,7 @@ const Layout = ({ children }) => (
                 href="https://github.com/joshglazer/SpotYou"
                 className="font-bold no-underline text-white"
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 Source Code on GitHub
               </a>
