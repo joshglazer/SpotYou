@@ -1,4 +1,4 @@
-const key = 'AIzaSyAhpRahc4Q9gdQX5IwN4cCZ2vxC2VEgYCQ';
+const key = process.env.YOUTUBE_API_KEY;
 
 export async function search(searchTerm) {
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${key}&q=${searchTerm}`;
