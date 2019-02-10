@@ -25,13 +25,13 @@ const Layout = ({ children }) => (
           {children}
         </div>
 
-        <footer className="bg-blue">
+        <footer className="bg-blue-lighter">
           <div className="flex justify-between max-w-xl mx-auto p-4 md:p-8 text-sm">
-            <p className="text-white">
+            <p className="text-black">
               A {' '}
               <a
                 href="https://www.linkedin.com/in/joshglazer/"
-                className="font-bold no-underline text-white"
+                className="font-bold no-underline text-black"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -43,7 +43,7 @@ const Layout = ({ children }) => (
             <p>
               <a
                 href="https://github.com/joshglazer/SpotYou"
-                className="font-bold no-underline text-white"
+                className="font-bold no-underline text-black"
                 target="_blank"
                 rel="noopener noreferrer"
               >

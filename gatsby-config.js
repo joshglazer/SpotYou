@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `SpotYou`,
-    description: `Spotify + Youtube = 👀`,
+    description: `👂 Spotify + 👀 Youtube = 😋`,
     author: `@glazerade`,
   },
   plugins: [
@@ -24,7 +24,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#4dc0b5`,
         display: `minimal-ui`,
-        icon: `src/images/tailwind-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/logo.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-postcss`,
