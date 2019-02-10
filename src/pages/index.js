@@ -9,6 +9,8 @@ import YouTube from 'react-youtube';
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
 
+import logo from '../images/logo.png'
+
 export default class IndexPage extends Component {
   constructor(props) {
     super(props);
@@ -77,6 +79,10 @@ export default class IndexPage extends Component {
     }
   }
 
+  handleBrokenImage(event) {
+    event.target.src = logo;
+  }
+
   render() {
     return (
       <Layout>
@@ -104,7 +110,7 @@ export default class IndexPage extends Component {
                 className="btn mt-6"
                 onClick={() => this.handleSpotifyConnect() }
               >
-                Connect your Spotify Account!
+                Click to Connect your Spotify Account
               </button>
             </div>
           </div>
@@ -115,17 +121,28 @@ export default class IndexPage extends Component {
             </h2>
             <div className="step-content">
               { this.state.playlists.length > 0 &&
-                <div>
-                  <p className="leading-loose">
-                    Your playlists are below:
-                  </p>
+                <div className="flex flex-wrap">
                   {
                     this.state.playlists.map(function(playlist, index) {
                       return (
-                        <div className="pb-10" key={index} onClick={() => this.handlePlaylistClick(playlist)}>
-                          <div>{playlist.name}</div>
-                          <img src={playlist.images[0].url} style={{maxHeight: 100}} alt={playlist.name}/>
+                        <div key={index} className="w-full md:w-1/2 lg:w-1/3" onClick={() => this.handlePlaylistClick(playlist)}>
+                          <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
+                            <div className="h-24 w-24 overflow-hidden">
+                              <img src={playlist.images[0].url} alt={playlist.name} onError={this.handleBrokenImage}/>
+                            </div>
+                            <div className="p-4 flex flex-col justify-between">
+                              <div>
+                                <div className="text-black font-bold text-l mb-2">{playlist.name}</div>
+                              </div>
+                              <div className="flex items-center">
+                                <div className="text-sm">
+                                  <p className="text-black">Owner: {playlist.owner.display_name}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+
                       )
                     }, this)
                   }
