@@ -5,6 +5,7 @@ import SEO from '../components/seo'
 
 import queryString from 'query-string';
 import YouTube from 'react-youtube';
+import { FaSpotify } from 'react-icons/fa';
 
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
@@ -58,6 +59,7 @@ export default class IndexPage extends Component {
       playlistSelected: playlist,
       playlistSelectedTracks: tracks,
     });
+    window.scrollTo(0,0);
   }
 
   async youtubeSearch(track) {
@@ -110,7 +112,7 @@ export default class IndexPage extends Component {
                 className="btn mt-6"
                 onClick={() => this.handleSpotifyConnect() }
               >
-                Click to Connect your Spotify Account
+                <FaSpotify /> Click to Connect your Spotify Account
               </button>
             </div>
           </div>
@@ -136,7 +138,7 @@ export default class IndexPage extends Component {
                               </div>
                               <div className="flex items-center">
                                 <div className="text-sm">
-                                  <p className="text-black">Owner: {playlist.owner.display_name}</p>
+                                  <p className="text-grey-darkest">Owner: {playlist.owner.display_name}</p>
                                 </div>
                               </div>
                             </div>

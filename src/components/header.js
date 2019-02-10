@@ -6,7 +6,7 @@ import logo from '../images/logo.png'
 
 const Header = ({ siteTitle, siteDescription }) => (
   <nav className="bg-blue-lighter pin-t w-full z-10 fixed">
-    <div className="flex flex-wrap items-center justify-between max-w-xl mx-auto p-4 md:p-8">
+    <div className="flex flex-wrap items-center justify-between max-w-xl mx-auto p-8">
       <div>
         <img src={logo} alt="SpotYou Logo" className='inline pr-5 align-middle h-16' />
         <Link to="/" className="no-underline text-black inline align-middle" >
