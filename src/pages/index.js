@@ -32,6 +32,7 @@ export default class IndexPage extends Component {
       video: null,
     }
 
+    this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this);
     this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
 
   }
@@ -43,6 +44,10 @@ export default class IndexPage extends Component {
         playlists: playlists,
       });
     }
+  }
+
+  handleSpotifyConnect() {
+    window.location.replace(authorizeUrl(this.props.location));
   }
 
   async handlePlaylistClick(playlist) {
@@ -64,7 +69,6 @@ export default class IndexPage extends Component {
     searchTerms.push("Official Music Video");
 
     const data = await search(searchTerms);
-    console.log(data);
     if (data.items.length) {
       this.setState({
         video: data.items[0],
@@ -94,11 +98,11 @@ export default class IndexPage extends Component {
                 To get started, click the button below to connect your spotify account.
               </p>
 
-              <a
-                href={authorizeUrl(this.props.location)}
+              <button
+                onClick={() => this.handleSpotifyConnect() }
               >
                 Connect your Spotify Account!
-              </a>
+              </button>
             </div>
           }
 
