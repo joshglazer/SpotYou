@@ -4,7 +4,7 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 import queryString from 'query-string';
-import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player';
 import { FaSpotify } from 'react-icons/fa';
 
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
@@ -36,7 +36,6 @@ export default class IndexPage extends Component {
     if (parsedHash['access_token']) {
       const accessToken = parsedHash['access_token'];
       const playlists = await getPlaylists(accessToken);
-      console.log(playlists);
       this.setState({
         step: 2,
         accessToken: accessToken,
@@ -160,30 +159,35 @@ export default class IndexPage extends Component {
             <div className="step-content">
               { this.state.playlistSelected &&
                 <div>
-                  <p className="leading-loose">
-                    You have selected : {this.state.playlistSelected.name}
-                  </p>
-                  <div className="flex">
-                    <div className="w-1/2">
+                  <div className="flex flex-wrap">
+                    <div className="w-full md:w-1/2">
+                      <p className="text-xl mb-4">
+                        Selected Playlist: {this.state.playlistSelected.name}
+                      </p>
                       { this.state.video &&
-                        <div className="fixed">
-                          { this.state.video.snippet.title }
-                          <YouTube
-                            videoId={this.state.video.id.videoId}
-                            opts={{
-                              width: 300,
-                              height: 200,
-                            }}
-                          />
+                        <div>
+                          <div className='mb-4'>
+                            { this.state.video.snippet.title }
+                          </div>
+                          <div className='player-wrapper'>
+                            <ReactPlayer
+                              className='react-player'
+                              url={`https://www.youtube.com/watch?v=${this.state.video.id.videoId}`}
+                              controls
+                              playing
+                              width='100%'
+                              height='100%'
+                            />
+                          </div>
                         </div>
                       }
                     </div>
-                    <div className="w-1/2">
+                    <div className="w-full md:w-1/2">
                       {
                         this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.map(function(track, index) {
                           return (
-                            <div className="pb-10" key={index} onClick={() => this.youtubeSearch(track)}>
-                              <div>{track.track.name}</div>
+                            <div className="bg-white rounded overflow-hidden border-grey-light text-left text-black p-4 m-2" key={index} onClick={() => this.youtubeSearch(track)}>
+                              <div className="font-bold text-xl">{track.track.name}</div>
                               <div>
                               {
                                 track.track.artists.map(function(artist, index) {
