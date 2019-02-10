@@ -1,9 +1,10 @@
 export function authorizeUrl(location) {
-  console.log(location);
+  console.log(location.href);
   const clientID = 'b31cb61c491840d69d23ff47bcbf3850';
-  const redirectURI = location.href;
+  const redirectUri = location.href;
   const scope = 'playlist-read-private';
-  const authorizeUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}&response_type=token`
+  const authorizeUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`
+  console.log(authorizeUrl)
   return authorizeUrl;
 }
 
