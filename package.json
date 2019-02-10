@@ -23,6 +23,7 @@
     "react-player": "^1.9.3",
     "react-sticky": "^6.0.3",
     "react-sticky-el": "^1.0.20",
+    "react-toastify": "^4.5.2",
     "tailwindcss": "^0.7.3"
   },
   "keywords": [

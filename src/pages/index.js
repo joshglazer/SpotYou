@@ -3,11 +3,12 @@ import React, { Component } from 'react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 
-import queryString from 'query-string';
 import { FaSpotify } from 'react-icons/fa';
+import queryString from 'query-string';
 import ReactPlayer from 'react-player';
 import Sticky from 'react-sticky-el';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
@@ -38,14 +39,15 @@ export default class IndexPage extends Component {
     if (parsedHash['access_token']) {
       const accessToken = parsedHash['access_token'];
       const playlists = await getPlaylists(accessToken);
-      this.setState({
-        step: 2,
-        accessToken: accessToken,
-        playlists: playlists,
-      });
-    }
-
-    if (this.state.accessToken) {
+      if (playlists) {
+        this.setState({
+          step: 2,
+          accessToken: accessToken,
+          playlists: playlists,
+        });
+      } else {
+        this.spotifyWarnToast();
+      }
     }
   }
 
@@ -55,11 +57,18 @@ export default class IndexPage extends Component {
 
   async handlePlaylistClick(playlist) {
     const tracks = await getPlaylistTracks(this.state.accessToken, playlist.tracks.href);
-    this.setState({
-      step: 3,
-      playlistSelected: playlist,
-      playlistSelectedTracks: tracks,
-    });
+    if (tracks) {
+      this.setState({
+        step: 3,
+        playlistSelected: playlist,
+        playlistSelectedTracks: tracks,
+      });
+    } else {
+      this.spotifyWarnToast();
+      this.setState({
+        step: 1,
+      });
+    }
     window.scrollTo(0,0);
   }
 
@@ -84,6 +93,10 @@ export default class IndexPage extends Component {
 
   handleBrokenImage(event) {
     event.target.src = logo;
+  }
+
+  spotifyWarnToast() {
+    toast.warn('Uh Oh! Your connection to spotify has expired. Please reconnect and try again!');
   }
 
   render() {
@@ -213,6 +226,17 @@ export default class IndexPage extends Component {
           </div>
 
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange={false}
+          draggable
+          pauseOnHover={false}
+        />
         <div className='sticky hidden'>
           This is needed so the .sticky class does not get purged from css
         </div>
