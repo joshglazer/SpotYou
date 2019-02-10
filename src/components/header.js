@@ -14,7 +14,7 @@ const Header = ({ siteTitle, siteDescription }) => (
         </Link>
       </div>
 
-      <span className="no-underline text-black text-xl">{siteDescription}</span>
+      <span className="no-underline text-black text-xl hidden md:block">{siteDescription}</span>
 
     </div>
   </nav>

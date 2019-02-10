@@ -18,7 +18,7 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <div className="flex flex-col min-h-screen text-grey-darkest">
+      <div className="flex flex-col min-h-screen text-grey-darkest bg-blue-light">
         <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
         <Header siteTitle={data.site.siteMetadata.title} siteDescription={data.site.siteMetadata.description} />
 
