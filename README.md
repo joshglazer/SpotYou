@@ -4,3 +4,5 @@ to allow a user to select a Spotify playlist that they have either created or
 subscribed to, and then watch music  videos for each song in the playlist.
 
 I used the following gatsby starter: https://github.com/taylorbryant/gatsby-starter-tailwind
+
+The project is hosted through netlify on https://spotyou.joshglazer.com/
