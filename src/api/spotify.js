@@ -1,4 +1,5 @@
 export function authorizeUrl(location) {
+  console.log(location);
   const clientID = 'b31cb61c491840d69d23ff47bcbf3850';
   const redirectURI = location.href;
   const scope = 'playlist-read-private';
