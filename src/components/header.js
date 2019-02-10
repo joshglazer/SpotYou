@@ -10,7 +10,7 @@ const Header = ({ siteTitle, siteDescription }) => (
       </Link>
 
       <Link to="/" className="flex items-center no-underline text-white">
-        <span className="text-xl">asdf{siteDescription}</span>
+        <span className="text-xl">{siteDescription}</span>
       </Link>
 
     </div>
