@@ -13,19 +13,9 @@ export default class IndexPage extends Component {
   constructor(props) {
     super(props);
 
-    let step = 1;
-    let accessToken = null;
-
-    // handle Spotify authroization flow
-    const parsedHash = queryString.parse(this.props.location.hash);
-    if (parsedHash['access_token']) {
-      step = 2;
-      accessToken = parsedHash['access_token'];
-    }
-
     this.state = {
-      step: step,
-      accessToken: accessToken,
+      step: 1,
+      accessToken: null,
       playlists: [],
       playlistSelected: null,
       playlistSelectedTracks: [],
@@ -38,11 +28,20 @@ export default class IndexPage extends Component {
   }
 
   async componentDidMount() {
-    if (this.state.accessToken) {
-      const playlists = await getPlaylists(this.state.accessToken);
+    // handle Spotify authroization flow
+    const parsedHash = queryString.parse(this.props.location.hash);
+    if (parsedHash['access_token']) {
+      const accessToken = parsedHash['access_token'];
+      const playlists = await getPlaylists(accessToken);
+      console.log(playlists);
       this.setState({
+        step: 2,
+        accessToken: accessToken,
         playlists: playlists,
       });
+    }
+
+    if (this.state.accessToken) {
     }
   }
 
