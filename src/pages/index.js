@@ -213,6 +213,9 @@ export default class IndexPage extends Component {
           </div>
 
         </div>
+        <div className='sticky hidden'>
+          This is needed so the .sticky class does not get purged from css
+        </div>
       </Layout>
     );
   }
