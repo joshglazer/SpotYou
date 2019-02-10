@@ -36,6 +36,35 @@
  * @import "components/forms";
  */
 
+ .step {
+   @apply flex flex-col justify-center px-4 py-8 text-white;
+ }
+
+ .step .step-title {
+   @apply opacity-25 font-semibold text-3xl;
+ }
+
+ .step.inactive .step-content {
+   @apply hidden;
+ }
+
+ .step.active {
+   @apply flex-1;
+   @apply text-white;
+ }
+
+ .step.active .step-content {
+   @apply: block;
+ }
+
+ .step.active .step-title {
+   @apply opacity-100 mb-6;
+ }
+
+ .btn {
+   @apply bg-spotify text-white font-bold py-2 px-4 rounded;
+ }
+
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.
@@ -60,3 +89,7 @@
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+body {
+  font-family: 'Poppins', sans-serif;
+}

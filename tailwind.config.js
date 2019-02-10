@@ -127,6 +127,9 @@ let colors = {
   'pink-light': '#fa7ea8',
   'pink-lighter': '#ffbbca',
   'pink-lightest': '#ffebef',
+
+  'spotify': '#1db954',
+  'youtube': '#f62d19',
 }
 
 module.exports = {

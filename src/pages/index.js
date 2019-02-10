@@ -86,87 +86,106 @@ export default class IndexPage extends Component {
           keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
         />
 
-        <div className="text-center">
+        <div className="text-center flex flex-col flex-1">
 
-          { this.state.step === 1 &&
-            <div>
-              <h2 className="bg-yellow inline-block my-8 p-3">
-                Hey there! Welcome to SpotYou.
-              </h2>
+          <div id="step1" className={'bg-blue-light step ' + (this.state.step === 1 ? "active" : "inactive")}>
+            <h2 className="step-title">
+              1. Connect your Spotify Account
+            </h2>
+            <div className="step-content">
+              <p>
+                Hey there! Welcome to SpotYou!
+              </p>
 
               <p>
                 To get started, click the button below to connect your spotify account.
               </p>
 
               <button
+                className="btn mt-6"
                 onClick={() => this.handleSpotifyConnect() }
               >
                 Connect your Spotify Account!
               </button>
             </div>
-          }
+          </div>
 
-          { this.state.step === 2 &&
-            <div>
-              <p className="leading-loose">
-                Your playlists are below:
-              </p>
-              {
-                this.state.playlists.map(function(playlist, index) {
-                  return (
-                    <div className="pb-10" key={index} onClick={() => this.handlePlaylistClick(playlist)}>
-                      <div>{playlist.name}</div>
-                      <img src={playlist.images[0].url} style={{maxHeight: 100}} alt={playlist.name}/>
-                    </div>
-                  )
-                }, this)
-              }
-            </div>
-          }
-
-          { this.state.step === 3 &&
-            <div>
-              <p className="leading-loose">
-                You have selected : {this.state.playlistSelected.name}
-              </p>
-              <div className="flex">
-                <div className="w-1/2">
-                  { this.state.video &&
-                    <div className="fixed">
-                      { this.state.video.snippet.title }
-                      <YouTube
-                        videoId={this.state.video.id.videoId}
-                        opts={{
-                          width: 300,
-                          height: 200,
-                        }}
-                      />
-                    </div>
-                  }
-                </div>
-                <div className="w-1/2">
+          <div id="step2" className={'bg-blue step ' + (this.state.step === 2 ? "active" : "inactive")}>
+            <h2 className="step-title">
+              2. Choose a playlist
+            </h2>
+            <div className="step-content">
+              { this.state.playlists.length > 0 &&
+                <div>
+                  <p className="leading-loose">
+                    Your playlists are below:
+                  </p>
                   {
-                    this.state.playlistSelectedTracks.map(function(track, index) {
+                    this.state.playlists.map(function(playlist, index) {
                       return (
-                        <div className="pb-10" key={index} onClick={() => this.youtubeSearch(track)}>
-                          <div>{track.track.name}</div>
-                          <div>
-                          {
-                            track.track.artists.map(function(artist, index) {
-                              return (
-                                <div key={index}>{artist.name}</div>
-                              )
-                            },this)
-                          }
-                          </div>
+                        <div className="pb-10" key={index} onClick={() => this.handlePlaylistClick(playlist)}>
+                          <div>{playlist.name}</div>
+                          <img src={playlist.images[0].url} style={{maxHeight: 100}} alt={playlist.name}/>
                         </div>
                       )
                     }, this)
                   }
                 </div>
-              </div>
+              }
             </div>
-          }
+          </div>
+
+          <div id="step3" className={'bg-blue-dark step ' + (this.state.step === 3 ? "active" : "inactive")}>
+            <h2 className="step-title">
+              3. Choose a Song
+            </h2>
+            <div className="step-content">
+              { this.state.playlistSelected &&
+                <div>
+                  <p className="leading-loose">
+                    You have selected : {this.state.playlistSelected.name}
+                  </p>
+                  <div className="flex">
+                    <div className="w-1/2">
+                      { this.state.video &&
+                        <div className="fixed">
+                          { this.state.video.snippet.title }
+                          <YouTube
+                            videoId={this.state.video.id.videoId}
+                            opts={{
+                              width: 300,
+                              height: 200,
+                            }}
+                          />
+                        </div>
+                      }
+                    </div>
+                    <div className="w-1/2">
+                      {
+                        this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.map(function(track, index) {
+                          return (
+                            <div className="pb-10" key={index} onClick={() => this.youtubeSearch(track)}>
+                              <div>{track.track.name}</div>
+                              <div>
+                              {
+                                track.track.artists.map(function(artist, index) {
+                                  return (
+                                    <div key={index}>{artist.name}</div>
+                                  )
+                                },this)
+                              }
+                              </div>
+                            </div>
+                          )
+                        }, this)
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
         </div>
       </Layout>
     );

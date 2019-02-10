@@ -18,20 +18,21 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <div className="flex flex-col font-sans min-h-screen text-grey-darkest">
+      <div className="flex flex-col min-h-screen text-grey-darkest">
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
         <Header siteTitle={data.site.siteMetadata.title} siteDescription={data.site.siteMetadata.description} />
 
-        <div className="flex flex-col flex-1 md:justify-center max-w-xl mx-auto px-4 py-8 md:p-8 w-full mt-32">
+        <div className="flex flex-col flex-1 md:justify-center w-full mt-32">
           {children}
         </div>
 
-        <footer className="bg-blue-lighter">
+        <footer className="bg-blue-darker">
           <div className="flex justify-between max-w-xl mx-auto p-4 md:p-8 text-sm">
-            <p className="text-black">
+            <p className="text-white">
               A {' '}
               <a
                 href="https://www.linkedin.com/in/joshglazer/"
-                className="font-bold no-underline text-black"
+                className="font-bold no-underline text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -43,7 +44,7 @@ const Layout = ({ children }) => (
             <p>
               <a
                 href="https://github.com/joshglazer/SpotYou"
-                className="font-bold no-underline text-black"
+                className="font-bold no-underline text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
