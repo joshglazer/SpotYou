@@ -4,8 +4,10 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 
 import queryString from 'query-string';
-import ReactPlayer from 'react-player';
 import { FaSpotify } from 'react-icons/fa';
+import ReactPlayer from 'react-player';
+import Sticky from 'react-sticky-el';
+
 
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
@@ -169,16 +171,18 @@ export default class IndexPage extends Component {
                           <div className='mb-4'>
                             { this.state.video.snippet.title }
                           </div>
-                          <div className='player-wrapper'>
-                            <ReactPlayer
-                              className='react-player'
-                              url={`https://www.youtube.com/watch?v=${this.state.video.id.videoId}`}
-                              controls
-                              playing
-                              width='100%'
-                              height='100%'
-                            />
-                          </div>
+                          <Sticky>
+                            <div className='player-wrapper'>
+                              <ReactPlayer
+                                className='react-player'
+                                url={`https://www.youtube.com/watch?v=${this.state.video.id.videoId}`}
+                                controls
+                                playing
+                                width='100%'
+                                height='100%'
+                              />
+                            </div>
+                          </Sticky>
                         </div>
                       }
                     </div>

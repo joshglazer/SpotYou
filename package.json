@@ -21,6 +21,8 @@
     "react-helmet": "^5.2.0",
     "react-icons": "^3.3.0",
     "react-player": "^1.9.3",
+    "react-sticky": "^6.0.3",
+    "react-sticky-el": "^1.0.20",
     "tailwindcss": "^0.7.3"
   },
   "keywords": [

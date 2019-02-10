@@ -65,6 +65,14 @@
    @apply bg-spotify text-white font-bold py-2 px-4 rounded;
  }
 
+ .sticky {
+   @apply mt-32;
+ }
+
+ .sticky .player-wrapper {
+   @apply mt-2;
+ }
+
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.
