@@ -114,16 +114,20 @@ export default class IndexPage extends Component {
               1. Connect your Spotify Account
             </h2>
             <div className="step-content">
-              <p>
+              <p className='mb-6'>
                 Hey there! Welcome to SpotYou!
               </p>
 
-              <p>
+              <p className='mb-6'>
+                SpotYou allows you to connect Spotify and Youtube to watch your favorite music videos.
+              </p>
+
+              <p className='mb-6'>
                 To get started, click the button below to connect your spotify account.
               </p>
 
               <button
-                className="btn mt-6"
+                className="btn text-xl"
                 onClick={() => this.handleSpotifyConnect() }
               >
                 <FaSpotify /> Click to Connect your Spotify Account
