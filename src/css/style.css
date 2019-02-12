@@ -44,17 +44,24 @@
    @apply opacity-25 font-semibold text-3xl;
  }
 
- .step.inactive .step-content {
+ .step .step-content {
    @apply hidden;
+ }
+
+ .step.active .step-content {
+   @apply block;
  }
 
  .step.active {
    @apply flex-1;
-   @apply text-white;
  }
 
  .step.active .step-content {
    @apply: block;
+ }
+
+ .step.complete .step-title {
+   @apply opacity-100 cursor-pointer;
  }
 
  .step.active .step-title {

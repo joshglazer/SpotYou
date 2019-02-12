@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
+import { FaGithub } from 'react-icons/fa';
 
 import Header from './header'
 import '../css/style.css'
@@ -27,8 +28,8 @@ const Layout = ({ children }) => (
         </div>
 
         <footer className="bg-blue-darker">
-          <div className="flex justify-between max-w-xl mx-auto p-4 md:p-8 text-sm">
-            <p className="text-white">
+          <div className="w-full flex-wrap md:flex justify-between max-w-xl mx-auto p-4 md:p-8 text-sm">
+            <p className="w-full md:w-1/2 text-white text-center md:text-left pb-2 md:pb-0">
               A {' '}
               <a
                 href="https://www.linkedin.com/in/joshglazer/"
@@ -41,14 +42,14 @@ const Layout = ({ children }) => (
               {' '} Project
             </p>
 
-            <p>
+            <p className="w-full md:w-1/2 text-white text-center md:text-right">
               <a
                 href="https://github.com/joshglazer/SpotYou"
                 className="font-bold no-underline text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Source Code on GitHub
+                <FaGithub /> Source Code on GitHub
               </a>
             </p>
           </div>

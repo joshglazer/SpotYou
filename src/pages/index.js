@@ -41,13 +41,39 @@ export default class IndexPage extends Component {
       const playlists = await getPlaylists(accessToken);
       if (playlists) {
         this.setState({
-          step: 2,
           accessToken: accessToken,
           playlists: playlists,
         });
+        this.setStep(2, true);
       } else {
         this.spotifyWarnToast();
       }
+    }
+  }
+
+  setStep(step, skipCheck=false, resetMax=false) {
+    if (!skipCheck && step > this.state.step) {
+      return;
+    } else {
+      window.scrollTo(0,0);
+      this.setState({
+        step: step,
+      });
+      if (step != 3) {
+        this.setState({
+          video: null
+        })
+      }
+    }
+  }
+
+  stepClassName(step) {
+    if (step === this.state.step) {
+      return "active";
+    } else if (step <= this.state.step) {
+      return "complete";
+    } else {
+      return "inactive";
     }
   }
 
@@ -59,17 +85,14 @@ export default class IndexPage extends Component {
     const tracks = await getPlaylistTracks(this.state.accessToken, playlist.tracks.href);
     if (tracks) {
       this.setState({
-        step: 3,
         playlistSelected: playlist,
         playlistSelectedTracks: tracks,
       });
+      this.setStep(3, true);
     } else {
       this.spotifyWarnToast();
-      this.setState({
-        step: 1,
-      });
+      this.state.setStep(1, false, true)
     }
-    window.scrollTo(0,0);
   }
 
   async youtubeSearch(track) {
@@ -109,8 +132,8 @@ export default class IndexPage extends Component {
 
         <div className="text-center flex flex-col flex-1">
 
-          <div id="step1" className={'bg-blue-light step ' + (this.state.step === 1 ? "active" : "inactive")}>
-            <h2 className="step-title">
+          <div id="step1" className={'bg-blue-light step ' + this.stepClassName(1)}>
+            <h2 className="step-title" onClick={() => this.setStep(1)}>
               1. Connect your Spotify Account
             </h2>
             <div className="step-content">
@@ -135,8 +158,8 @@ export default class IndexPage extends Component {
             </div>
           </div>
 
-          <div id="step2" className={'bg-blue step ' + (this.state.step === 2 ? "active" : "inactive")}>
-            <h2 className="step-title">
+          <div id="step2" className={'bg-blue step ' + this.stepClassName(2)}>
+            <h2 className="step-title" onClick={() => this.setStep(2)}>
               2. Choose a playlist
             </h2>
             <div className="step-content">
@@ -171,8 +194,8 @@ export default class IndexPage extends Component {
             </div>
           </div>
 
-          <div id="step3" className={'bg-blue-dark step ' + (this.state.step === 3 ? "active" : "inactive")}>
-            <h2 className="step-title">
+          <div id="step3" className={'bg-blue-dark step ' + this.stepClassName(3)}>
+            <h2 className="step-title" onClick={() => this.setStep(3)}>
               3. Choose a Song
             </h2>
             <div className="step-content">
