@@ -170,7 +170,7 @@ export default class IndexPage extends Component {
                       return (
                         <div key={index} className="w-full md:w-1/2 lg:w-1/3" onClick={() => this.handlePlaylistClick(playlist)}>
                           <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
-                            <div className="h-24 w-24 overflow-hidden">
+                            <div className="h-24 w-24 overflow-hidden flex-no-shrink">
                               <img src={playlist.images[0].url} alt={playlist.name} onError={this.handleBrokenImage}/>
                             </div>
                             <div className="p-4 flex flex-col justify-between">
