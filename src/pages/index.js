@@ -184,7 +184,7 @@ export default class IndexPage extends Component {
                         <div key={index} className="w-full md:w-1/2 lg:w-1/3 cursor-pointer" onClick={() => this.handlePlaylistClick(playlist)}>
                           <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
                             <div className="h-24 w-24 overflow-hidden flex-no-shrink">
-                              <img src={playlist.images[0].url} alt={playlist.name} onError={this.handleBrokenImage}/>
+                              <img src={(playlist.images.length && playlist.images[0].url) || logo} alt={playlist.name} onError={this.handleBrokenImage}/>
                             </div>
                             <div className="p-4 flex flex-col justify-between">
                               <div>
@@ -202,6 +202,11 @@ export default class IndexPage extends Component {
                       )
                     }, this)
                   }
+                </div>
+              }
+              { this.state.playlists.length === 0 &&
+                <div>
+                  You have not followed or created any playlists.  Go follow one and come back.
                 </div>
               }
             </div>
@@ -257,6 +262,11 @@ export default class IndexPage extends Component {
                             </div>
                           )
                         }, this)
+                      }
+                      { (this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.length == 0) &&
+                        <div>
+                          This playlist does not have any tracks.  Add some and come back.
+                        </div>
                       }
                     </div>
                   </div>
