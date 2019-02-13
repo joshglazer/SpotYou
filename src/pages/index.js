@@ -35,6 +35,7 @@ export default class IndexPage extends Component {
   }
 
   async componentDidMount() {
+    ReactGA.initialize(process.env.GATSBY_GA_UA_ID);
     console.log(`Initialize Google Analytics - ${process.env.GATSBY_GA_UA_ID}`)
     // handle Spotify authroization flow
     const parsedHash = queryString.parse(this.props.location.hash);
