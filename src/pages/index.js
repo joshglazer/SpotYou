@@ -54,9 +54,7 @@ export default class IndexPage extends Component {
     } else {
       ReactGA.pageview('Step 1');
     }
-    console.log(this.props.location);
     const parsedQuery = queryString.parse(this.props.location.search);
-    console.log(parsedQuery);
     if (parsedQuery['error'] === 'access_denied') {
       toast.warn('Uh Oh! It looks like you did not agree to allow us to access your Spotify account. Please try again and make sure you click the "Agree" button.');
     }
