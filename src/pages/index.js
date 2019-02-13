@@ -174,7 +174,7 @@ export default class IndexPage extends Component {
                   {
                     this.state.playlists.map(function(playlist, index) {
                       return (
-                        <div key={index} className="w-full md:w-1/2 lg:w-1/3" onClick={() => this.handlePlaylistClick(playlist)}>
+                        <div key={index} className="w-full md:w-1/2 lg:w-1/3 cursor-pointer" onClick={() => this.handlePlaylistClick(playlist)}>
                           <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
                             <div className="h-24 w-24 overflow-hidden flex-no-shrink">
                               <img src={playlist.images[0].url} alt={playlist.name} onError={this.handleBrokenImage}/>
@@ -236,7 +236,7 @@ export default class IndexPage extends Component {
                       {
                         this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.map(function(track, index) {
                           return (
-                            <div className="bg-white rounded overflow-hidden border-grey-light text-left text-black p-4 m-2" key={index} onClick={() => this.youtubeSearch(track)}>
+                            <div className="bg-white rounded overflow-hidden border-grey-light text-left text-black p-4 m-2 cursor-pointer" key={index} onClick={() => this.youtubeSearch(track)}>
                               <div className="font-bold text-xl">{track.track.name}</div>
                               <div>
                               {
