@@ -263,7 +263,7 @@ export default class IndexPage extends Component {
                           )
                         }, this)
                       }
-                      { (this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.length == 0) &&
+                      { (this.state.playlistSelectedTracks && this.state.playlistSelectedTracks.length === 0) &&
                         <div>
                           This playlist does not have any tracks.  Add some and come back.
                         </div>
