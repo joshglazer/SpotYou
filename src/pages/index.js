@@ -5,6 +5,7 @@ import SEO from '../components/seo'
 
 import { FaSpotify } from 'react-icons/fa';
 import queryString from 'query-string';
+import ReactGA from 'react-ga';
 import ReactPlayer from 'react-player';
 import Sticky from 'react-sticky-el';
 import { ToastContainer, toast } from 'react-toastify';
@@ -34,6 +35,7 @@ export default class IndexPage extends Component {
   }
 
   async componentDidMount() {
+    ReactGA.initialize(process.env.GA_UA_ID);
     // handle Spotify authroization flow
     const parsedHash = queryString.parse(this.props.location.hash);
     if (parsedHash['access_token']) {
@@ -46,8 +48,11 @@ export default class IndexPage extends Component {
         });
         this.setStep(2, true);
       } else {
+        ReactGA.pageview('Step 1');
         this.spotifyWarnToast();
       }
+    } else {
+      ReactGA.pageview('Step 1');
     }
   }
 
@@ -55,11 +60,12 @@ export default class IndexPage extends Component {
     if (!skipCheck && step > this.state.step) {
       return;
     } else {
+      ReactGA.pageview(`Step ${step}`);
       window.scrollTo(0,0);
       this.setState({
         step: step,
       });
-      if (step != 3) {
+      if (step !== 3) {
         this.setState({
           video: null
         })
