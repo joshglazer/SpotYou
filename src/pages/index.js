@@ -95,6 +95,11 @@ export default class IndexPage extends Component {
   async handlePlaylistClick(playlist) {
     const tracks = await getPlaylistTracks(this.state.accessToken, playlist.tracks.href);
     if (tracks) {
+      ReactGA.event({
+        category: 'Playlist',
+        action: playlist.id,
+        label: playlist.name,
+      });
       this.setState({
         playlistSelected: playlist,
         playlistSelectedTracks: tracks,
@@ -109,7 +114,9 @@ export default class IndexPage extends Component {
   async youtubeSearch(track) {
     let searchTerms = [track.track.name];
 
+    let artistList = [];
     track.track.artists.map((artist) => {
+      artistList.push(artist.name);
       return searchTerms.push(artist.name);
     })
 
@@ -117,6 +124,12 @@ export default class IndexPage extends Component {
 
     const data = await search(searchTerms);
     if (data.items.length) {
+      ReactGA.event({
+        category: 'Song',
+        action: track.track.id,
+        label: `${track.track.name} - ${artistList.join(', ')}`,
+      });
+
       this.setState({
         video: data.items[0],
       })
