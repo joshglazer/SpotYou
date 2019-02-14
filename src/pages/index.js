@@ -189,6 +189,9 @@ export default class IndexPage extends Component {
             <div className="step-content">
               { this.state.playlists.length > 0 &&
                 <div className="flex flex-wrap">
+                  <p className='w-full text-xl mb-4'>
+                    Click on one of your playlists to watch some of it's music video.
+                  </p>
                   {
                     this.state.playlists.map(function(playlist, index) {
                       return (
@@ -228,6 +231,9 @@ export default class IndexPage extends Component {
               3. Choose a Song
             </h2>
             <div className="step-content">
+              <p className='w-full mb-4 text-xl'>
+                Click on a song to watch it's music video.
+                </p>
               { this.state.playlistSelected &&
                 <div>
                   <div className="flex flex-wrap">
