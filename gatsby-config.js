@@ -3,6 +3,7 @@ module.exports = {
     title: `SpotYou`,
     subtitle: `👂 Spotify + 👀 Youtube = 😋`,
     description: `SpotYou allows you to connect Spotify and Youtube to watch your favorite music videos.`,
+    image: `https://spotyou.joshglazer.com/icons/icon-512x512.png`,
     author: `@glazerade`,
   },
   plugins: [
