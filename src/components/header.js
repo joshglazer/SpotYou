@@ -4,7 +4,7 @@ import React from 'react'
 
 import logo from '../images/logo.png'
 
-const Header = ({ siteTitle, siteDescription }) => (
+const Header = ({ siteTitle, siteSubTitle }) => (
   <nav className="bg-blue-lighter pin-t w-full z-10 fixed">
     <div className="flex flex-wrap items-center justify-between max-w-xl mx-auto p-8">
       <div>
@@ -14,7 +14,7 @@ const Header = ({ siteTitle, siteDescription }) => (
         </Link>
       </div>
 
-      <span className="no-underline text-black text-xl hidden md:block">{siteDescription}</span>
+      <span className="no-underline text-black text-xl hidden md:block">{siteSubTitle}</span>
 
     </div>
   </nav>

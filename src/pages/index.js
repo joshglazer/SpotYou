@@ -149,10 +149,7 @@ export default class IndexPage extends Component {
   render() {
     return (
       <Layout>
-        <SEO
-          title="Home"
-          keywords={[`gatsby`, `tailwind`, `react`, `tailwindcss`]}
-        />
+        <SEO />
 
         <div className="text-center flex flex-col flex-1">
 

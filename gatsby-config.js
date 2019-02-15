@@ -1,7 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `SpotYou`,
-    description: `👂 Spotify + 👀 Youtube = 😋`,
+    subtitle: `👂 Spotify + 👀 Youtube = 😋`,
+    description: `SpotYou allows you to connect Spotify and Youtube to watch your favorite music videos.`,
     author: `@glazerade`,
   },
   plugins: [
