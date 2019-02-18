@@ -21,7 +21,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <div className="flex flex-col min-h-screen text-grey-darkest bg-blue-light">
-        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500" rel="stylesheet" />
         <Header siteTitle={data.site.siteMetadata.title} siteSubTitle={data.site.siteMetadata.subtitle} />
 
         <div className="flex flex-col flex-1 md:justify-center w-full mt-32">
