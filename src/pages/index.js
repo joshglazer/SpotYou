@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
@@ -16,13 +17,12 @@ import {search} from '../api/youtube';
 
 import logo from '../images/logo.png'
 
-export default class IndexPage extends Component {
+class IndexPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       step: 1,
-      accessToken: null,
       playlists: [],
       playlistSelected: null,
       playlistSelectedTracks: [],
@@ -37,13 +37,10 @@ export default class IndexPage extends Component {
   async componentDidMount() {
     ReactGA.initialize(process.env.GATSBY_GA_UA_ID);
     // handle Spotify authroization flow
-    const parsedHash = queryString.parse(this.props.location.hash);
-    if (parsedHash['access_token']) {
-      const accessToken = parsedHash['access_token'];
-      const playlists = await getPlaylists(accessToken);
+    if (this.props.spotifyAccessToken) {
+      const playlists = await getPlaylists(this.props.spotifyAccessToken);
       if (playlists) {
         this.setState({
-          accessToken: accessToken,
           playlists: playlists,
         });
         this.setStep(2, true);
@@ -93,7 +90,7 @@ export default class IndexPage extends Component {
   }
 
   async handlePlaylistClick(playlist) {
-    const tracks = await getPlaylistTracks(this.state.accessToken, playlist.tracks.href);
+    const tracks = await getPlaylistTracks(this.props.spotifyAccessToken, playlist.tracks.href);
     if (tracks) {
       ReactGA.event({
         category: 'Playlist',
@@ -107,7 +104,7 @@ export default class IndexPage extends Component {
       this.setStep(3, true);
     } else {
       this.spotifyWarnToast();
-      this.state.setStep(1, false, true)
+      this.setStep(1, false, true)
     }
   }
 
@@ -150,7 +147,6 @@ export default class IndexPage extends Component {
     return (
       <Layout>
         <SEO />
-
         <div className="text-center flex flex-col flex-1">
 
           <div id="step1" className={'bg-blue-light step ' + this.stepClassName(1)}>
@@ -308,3 +304,13 @@ export default class IndexPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    spotifyAccessToken: state.app.spotifyAccessToken
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(IndexPage);
