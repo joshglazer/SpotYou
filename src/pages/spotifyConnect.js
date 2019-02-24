@@ -20,7 +20,11 @@ class SpotifyConnectPage extends Component {
 
   render() {
     return (
-      <Layout>Connecting to Spotify ... Sit Tight!</Layout>
+      <Layout>
+        <div className="text-center flex flex-col text-white">
+          Connecting to Spotify ... Sit Tight!
+        </div>
+      </Layout>
     )
   }
 }
