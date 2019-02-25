@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Layout from '../components/layout';
-import { setStep, reset } from '../state/app';
-
-import { FaSpotify } from 'react-icons/fa';
 import ReactGA from 'react-ga';
 import ReactPlayer from 'react-player';
 import Sticky from 'react-sticky-el';
@@ -13,8 +9,11 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
+import Layout from '../components/layout';
+import Step1 from '../components/index/step1';
+import { setStep, reset } from '../state/app';
 
-import logo from '../images/logo.png'
+import logo from '../images/logo.png';
 
 class IndexPage extends Component {
   constructor(props) {
@@ -84,7 +83,7 @@ class IndexPage extends Component {
       this.props.setStep(3, true);
     } else {
       this.spotifyWarnToast();
-      this.props.setStep(1, false, true)
+      this.props.setStep(1, false)
     }
   }
 
@@ -127,32 +126,7 @@ class IndexPage extends Component {
     return (
       <Layout>
         <div className="text-center flex flex-col flex-1">
-
-          <div id="step1" className={'bg-blue-light step ' + this.stepClassName(1)}>
-            <h2 className="step-title" onClick={() => this.props.setStep(1)}>
-              1. Connect your Spotify Account
-            </h2>
-            <div className="step-content">
-              <p className='mb-6'>
-                Hey there! Welcome to SpotYou!
-              </p>
-
-              <p className='mb-6'>
-                SpotYou allows you to connect Spotify and Youtube to watch your favorite music videos.
-              </p>
-
-              <p className='mb-6'>
-                To get started, click the button below to connect your spotify account.
-              </p>
-
-              <button
-                className="btn text-xl"
-                onClick={() => this.handleSpotifyConnect() }
-              >
-                <FaSpotify /> Click to Connect your Spotify Account
-              </button>
-            </div>
-          </div>
+          <Step1 />
 
           <div id="step2" className={'bg-blue step ' + this.stepClassName(2)}>
             <h2 className="step-title" onClick={() => this.props.setStep(2)}>
