@@ -7,8 +7,9 @@ import Sticky from 'react-sticky-el';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import {authorizeUrl, getPlaylists, getPlaylistTracks} from '../api/spotify';
+import {getPlaylists, getPlaylistTracks} from '../api/spotify';
 import {search} from '../api/youtube';
+import { stepClassName } from '../helpers';
 import Layout from '../components/layout';
 import Step1 from '../components/index/step1';
 import { setStep, reset } from '../state/app';
@@ -25,10 +26,6 @@ class IndexPage extends Component {
       playlistSelectedTracks: [],
       video: null,
     }
-
-    this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this);
-    this.handlePlaylistClick = this.handlePlaylistClick.bind(this);
-
   }
 
   async componentDidMount() {
@@ -52,20 +49,6 @@ class IndexPage extends Component {
     } else {
       this.props.setStep(1, true);
     }
-  }
-
-  stepClassName(step) {
-    if (step === this.props.step) {
-      return "active";
-    } else if (step <= this.props.step) {
-      return "complete";
-    } else {
-      return "inactive";
-    }
-  }
-
-  handleSpotifyConnect() {
-    window.location.replace(authorizeUrl(this.props.location));
   }
 
   async handlePlaylistClick(playlist) {
@@ -128,7 +111,7 @@ class IndexPage extends Component {
         <div className="text-center flex flex-col flex-1">
           <Step1 />
 
-          <div id="step2" className={'bg-blue step ' + this.stepClassName(2)}>
+          <div id="step2" className={'bg-blue step ' + stepClassName(2, this.props.step)}>
             <h2 className="step-title" onClick={() => this.props.setStep(2)}>
               2. Choose a playlist
             </h2>
@@ -172,7 +155,7 @@ class IndexPage extends Component {
             </div>
           </div>
 
-          <div id="step3" className={'bg-blue-dark step ' + this.stepClassName(3)}>
+          <div id="step3" className={'bg-blue-dark step ' + stepClassName(3, this.props.step)}>
             <h2 className="step-title" onClick={() => this.props.setStep(3)}>
               3. Choose a Song
             </h2>
