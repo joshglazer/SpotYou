@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
 import { FaGithub } from 'react-icons/fa';
+import { StaticQuery, graphql } from 'gatsby'
 
 import Header from './header'
+import SEO from '../components/seo';
 import '../css/style.css'
 
 const Layout = ({ children }) => (
@@ -21,6 +22,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <div className="flex flex-col min-h-screen text-grey-darkest bg-blue-light">
+        <SEO />
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500" rel="stylesheet" />
         <Header siteTitle={data.site.siteMetadata.title} siteSubTitle={data.site.siteMetadata.subtitle} />
 

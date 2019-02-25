@@ -11,10 +11,13 @@ class SpotifyConnectPage extends Component {
 
   componentDidMount() {
     const parsedHash = queryString.parse(this.props.location.hash);
+    let accessToken = null;
     if (parsedHash['access_token']) {
-      const accessToken = parsedHash['access_token'];
-      this.props.spotifyConnect(accessToken);
+      accessToken = parsedHash['access_token'];
+    } else {
+      accessToken = 'error';
     }
+    this.props.spotifyConnect(accessToken);
     navigate("/");
   }
 
@@ -32,7 +35,6 @@ class SpotifyConnectPage extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     spotifyConnect: accessToken => {
-      console.log("DISPATCH ME");
       dispatch(spotifyConnect(accessToken))
     }
   }

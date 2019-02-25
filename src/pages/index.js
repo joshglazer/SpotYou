@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/layout';
+import { setStep, reset } from '../state/app';
 
 import { FaSpotify } from 'react-icons/fa';
-import queryString from 'query-string';
 import ReactGA from 'react-ga';
 import ReactPlayer from 'react-player';
 import Sticky from 'react-sticky-el';
@@ -22,7 +21,6 @@ class IndexPage extends Component {
     super(props);
 
     this.state = {
-      step: 1,
       playlists: [],
       playlistSelected: null,
       playlistSelectedTracks: [],
@@ -36,49 +34,31 @@ class IndexPage extends Component {
 
   async componentDidMount() {
     ReactGA.initialize(process.env.GATSBY_GA_UA_ID);
-    // handle Spotify authroization flow
     if (this.props.spotifyAccessToken) {
-      const playlists = await getPlaylists(this.props.spotifyAccessToken);
-      if (playlists) {
-        this.setState({
-          playlists: playlists,
-        });
-        this.setStep(2, true);
+      if (this.props.spotifyAccessToken === 'error') {
+        this.props.reset();
+        toast.warn('Uh Oh! It looks like you did not agree to allow us to access your Spotify account. Please try again and make sure you click the "Agree" button.');
       } else {
-        ReactGA.pageview('Step 1');
-        this.spotifyWarnToast();
+        const playlists = await getPlaylists(this.props.spotifyAccessToken);
+        if (playlists) {
+          this.setState({
+            playlists: playlists,
+          });
+          this.props.setStep(2, true);
+        } else {
+          this.props.setStep(1, true);
+          this.spotifyWarnToast();
+        }
       }
     } else {
-      ReactGA.pageview('Step 1');
-    }
-    const parsedQuery = queryString.parse(this.props.location.search);
-    if (parsedQuery['error'] === 'access_denied') {
-      toast.warn('Uh Oh! It looks like you did not agree to allow us to access your Spotify account. Please try again and make sure you click the "Agree" button.');
-    }
-
-  }
-
-  setStep(step, skipCheck=false, resetMax=false) {
-    if (!skipCheck && step > this.state.step) {
-      return;
-    } else {
-      ReactGA.pageview(`Step ${step}`);
-      window.scrollTo(0,0);
-      this.setState({
-        step: step,
-      });
-      if (step !== 3) {
-        this.setState({
-          video: null
-        })
-      }
+      this.props.setStep(1, true);
     }
   }
 
   stepClassName(step) {
-    if (step === this.state.step) {
+    if (step === this.props.step) {
       return "active";
-    } else if (step <= this.state.step) {
+    } else if (step <= this.props.step) {
       return "complete";
     } else {
       return "inactive";
@@ -101,10 +81,10 @@ class IndexPage extends Component {
         playlistSelected: playlist,
         playlistSelectedTracks: tracks,
       });
-      this.setStep(3, true);
+      this.props.setStep(3, true);
     } else {
       this.spotifyWarnToast();
-      this.setStep(1, false, true)
+      this.props.setStep(1, false, true)
     }
   }
 
@@ -146,11 +126,10 @@ class IndexPage extends Component {
   render() {
     return (
       <Layout>
-        <SEO />
         <div className="text-center flex flex-col flex-1">
 
           <div id="step1" className={'bg-blue-light step ' + this.stepClassName(1)}>
-            <h2 className="step-title" onClick={() => this.setStep(1)}>
+            <h2 className="step-title" onClick={() => this.props.setStep(1)}>
               1. Connect your Spotify Account
             </h2>
             <div className="step-content">
@@ -176,7 +155,7 @@ class IndexPage extends Component {
           </div>
 
           <div id="step2" className={'bg-blue step ' + this.stepClassName(2)}>
-            <h2 className="step-title" onClick={() => this.setStep(2)}>
+            <h2 className="step-title" onClick={() => this.props.setStep(2)}>
               2. Choose a playlist
             </h2>
             <div className="step-content">
@@ -220,7 +199,7 @@ class IndexPage extends Component {
           </div>
 
           <div id="step3" className={'bg-blue-dark step ' + this.stepClassName(3)}>
-            <h2 className="step-title" onClick={() => this.setStep(3)}>
+            <h2 className="step-title" onClick={() => this.props.setStep(3)}>
               3. Choose a Song
             </h2>
             <div className="step-content">
@@ -307,10 +286,19 @@ class IndexPage extends Component {
 
 const mapStateToProps = state => {
   return {
+    step: state.app.step,
     spotifyAccessToken: state.app.spotifyAccessToken
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    reset: () => { dispatch(reset()) },
+    setStep: (step, skipCheck) => { dispatch(setStep(step, skipCheck)) }
+  }
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(IndexPage);
