@@ -1,3 +1,5 @@
+import logo from '../images/logo.png';
+
 export function stepClassName(stepCheck, stepActive) {
   if (stepCheck === stepActive) {
     return "active";
@@ -6,4 +8,8 @@ export function stepClassName(stepCheck, stepActive) {
   } else {
     return "inactive";
   }
+}
+
+export function handleBrokenImage(event) {
+  event.target.src = logo;
 }
