@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga';
 
 import { getPlaylists, getPlaylistTracks } from '../api/spotify';
+import { search } from '../api/youtube';
 
 const initialState = {
   step: 1,
@@ -18,6 +19,7 @@ const SET_STEP = 'SET_STEP';
 const SPOTIFY_CONNECT = 'SPOTIFY_CONNECT';
 const SPOTIFY_GET_PLAYLISTS = 'SPOTIFY_GET_PLAYLISTS';
 const SPOTIFY_GET_PLAYLIST_TRACKS = 'SPOTIFY_GET_PLAYLIST_TRACKS';
+const YOUTUBE_SEARCH = 'YOUTUBE_SEARCH';
 
 
 export function reset() {
@@ -75,6 +77,37 @@ export function spotifyGetPlaylistTracks(accessToken, playlist) {
   }
 }
 
+export function youtubeSearch(track) {
+  return dispatch => {
+
+    let searchTerms = [track.track.name];
+
+    let artistList = [];
+    track.track.artists.map((artist) => {
+      artistList.push(artist.name);
+      return searchTerms.push(artist.name);
+    })
+
+    searchTerms.push("Official Music Video");
+
+    search(searchTerms).then((data) => {
+      if (data.items.length) {
+        ReactGA.event({
+          category: 'Song',
+          action: track.track.id,
+          label: `${track.track.name} - ${artistList.join(', ')}`,
+        });
+
+        dispatch({
+          type: YOUTUBE_SEARCH,
+          payload: data.items[0]
+        });
+      }
+    });
+  }
+}
+
+
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
@@ -89,14 +122,8 @@ export default (state = initialState, action) => {
         return {
           ...state,
           step: payload.step,
+          video: state !== 3 ? null : state.video
         };
-        /*
-        if (step !== 3) {
-          this.setState({
-            video: null
-          })
-        }
-        */
       }
 
     case SPOTIFY_CONNECT:
@@ -116,6 +143,12 @@ export default (state = initialState, action) => {
         ...state,
         playlistSelected: payload.playlist,
         playlistSelectedTracks: payload.tracks,
+      }
+
+    case YOUTUBE_SEARCH:
+      return {
+        ...state,
+        video: payload,
       }
 
     default:

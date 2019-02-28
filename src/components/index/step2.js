@@ -29,7 +29,7 @@ class Step2 extends Component {
               {
                 this.props.playlists.map(function(playlist, index) {
                   return (
-                    <div key={index} className="w-full md:w-1/2 lg:w-1/3 cursor-pointer" onClick={() => { console.log(playlist); this.props.spotifyGetPlaylistTracks(this.props.spotifyAccessToken, playlist) }}>
+                    <div key={index} className="w-full md:w-1/2 lg:w-1/3 cursor-pointer" onClick={() => this.props.spotifyGetPlaylistTracks(this.props.spotifyAccessToken, playlist)}>
                       <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
                         <div className="h-24 w-24 overflow-hidden flex-no-shrink">
                           <img src={(playlist.images.length && playlist.images[0].url)} alt={playlist.name} onError={handleBrokenImage}/>
