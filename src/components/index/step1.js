@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Location } from '@reach/router';
 
-import { FaSpotify } from 'react-icons/fa';
+import { FaSpotify, FaAngleRight } from 'react-icons/fa';
 
 import { authorizeUrl } from '../../api/spotify';
 import { stepClassName } from '../../helpers';
-import { setStep } from '../../state/app';
+import { reset, setStep } from '../../state/app';
 
 class Step1 extends Component {
 
@@ -29,20 +29,44 @@ class Step1 extends Component {
             SpotYou allows you to connect Spotify and Youtube to watch your favorite music videos.
           </p>
 
-          <p className='mb-6'>
-            To get started, click the button below to connect your spotify account.
-          </p>
+          { this.props.spotifyAccessToken &&
+            <div>
+              <p className='mb-6'>
+                It looks like you have already connected your spotify account.  Great Job!
+              </p>
+              <p className='mb-6'>
+                <button
+                  className="btn text-xl"
+                  onClick={() => this.props.setStep(2, true)}
+                >
+                  Continue to Step 2 and Choose a Playlist <FaAngleRight className="align-middle" />
+                </button>
+              </p>
+              <p className='mb-6'>
+                <a className='cursor-pointer underline' onClick={() => this.props.reset()}>Disconnect my account</a>
+              </p>
+            </div>
+          }
 
-          <Location>
-            {({ navigate, location }) =>
-              <button
-                className="btn text-xl"
-                onClick={() => this.handleSpotifyConnect(location) }
-              >
-                <FaSpotify /> Click to Connect your Spotify Account
-              </button>
-            }
-          </Location>
+          { !this.props.spotifyAccessToken &&
+            <div>
+              <p className='mb-6'>
+                To get started, click the button below to connect your spotify account.
+              </p>
+
+              <Location>
+                {({ navigate, location }) =>
+                  <button
+                    className="btn text-xl"
+                    onClick={() => this.handleSpotifyConnect(location) }
+                  >
+                    <FaSpotify className="align-middle" /> Click to Connect your Spotify Account
+                  </button>
+                }
+              </Location>
+            </div>
+          }
+
         </div>
       </div>
     )
@@ -58,6 +82,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    reset: () => { dispatch(reset()) },
     setStep: (step, skipCheck) => { dispatch(setStep(step, skipCheck)) }
   }
 }
