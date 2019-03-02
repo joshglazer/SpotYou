@@ -1,7 +1,7 @@
 export function authorizeUrl(location) {
   const clientID = process.env.GATSBY_SPOTIFY_API_KEY;
   // Remove fragment from current url, in case there's a bad access token attached
-  const redirectUri = `${location.href.match(/(^[^#?]*)/)[0]}spotifyConnect/`;
+  const redirectUri = `${location.href.match(/(^[^#?]*)/)[0]}connect/`;
   const scope = 'playlist-read-private';
   return `https://accounts.spotify.com/authorize?client_id=${clientID}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token`
 }

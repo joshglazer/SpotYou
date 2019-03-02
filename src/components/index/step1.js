@@ -43,7 +43,7 @@ class Step1 extends Component {
                 </button>
               </p>
               <p className='mb-6'>
-                <a className='cursor-pointer underline' onClick={() => this.props.reset()}>Disconnect my account</a>
+                <button className='cursor-pointer underline text-white text-sm' onClick={() => this.props.reset()}>Disconnect my account</button>
               </p>
             </div>
           }
