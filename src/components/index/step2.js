@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { FaRedo } from 'react-icons/fa';
+
 import { handleBrokenImage, stepClassName } from '../../helpers';
 import { setStep } from '../../state/app';
-import { spotifyGetPlaylistTracks } from '../../state/app';
+import { spotifyGetPlaylists, spotifyGetPlaylistTracks } from '../../state/app';
 
 class Step2 extends Component {
 
@@ -54,9 +56,12 @@ class Step2 extends Component {
           }
           { this.props.playlists.length === 0 &&
             <div>
-              You have not followed or created any playlists.  Go follow one and come back.
+              You have not followed or created any playlists.  Go follow one and click refresh below.
             </div>
           }
+          <button className="btn text-xl mt-6" onClick={() => this.props.spotifyGetPlaylists(this.props.spotifyAccessToken)}>
+            <FaRedo className="align-middle" /> Refresh
+          </button>
         </div>
       </div>
     )
@@ -75,6 +80,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setStep: (step, skipCheck) => { dispatch(setStep(step, skipCheck)) },
+    spotifyGetPlaylists: accessToken => { dispatch(spotifyGetPlaylists(accessToken)) },
     spotifyGetPlaylistTracks: (accessToken, playlist) => { dispatch(spotifyGetPlaylistTracks(accessToken, playlist)) }
   }
 }

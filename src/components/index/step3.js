@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { FaRedo } from 'react-icons/fa';
 import ReactPlayer from 'react-player';
 import Sticky from 'react-sticky-el';
 
 import { stepClassName } from '../../helpers';
-import { setStep, youtubeSearch } from '../../state/app';
+import { setStep, spotifyGetPlaylistTracks, youtubeSearch } from '../../state/app';
 
 class Step3 extends Component {
   render() {
@@ -66,9 +67,12 @@ class Step3 extends Component {
                   }
                   { (this.props.playlistSelectedTracks && this.props.playlistSelectedTracks.length === 0) &&
                     <div>
-                      This playlist does not have any tracks.  Add some and come back.
+                      This playlist does not have any tracks.  Add some and click refresh below.
                     </div>
                   }
+                  <button className="btn text-xl mt-6" onClick={() => this.props.spotifyGetPlaylistTracks(this.props.spotifyAccessToken, this.props.playlistSelected)}>
+                    <FaRedo className="align-middle" /> Refresh
+                  </button>
                 </div>
               </div>
             </div>
@@ -82,6 +86,7 @@ class Step3 extends Component {
 const mapStateToProps = state => {
   return {
     step: state.app.step,
+    spotifyAccessToken: state.app.spotifyAccessToken,
     playlistSelected: state.app.playlistSelected,
     playlistSelectedTracks: state.app.playlistSelectedTracks,
     video: state.app.video,
@@ -92,6 +97,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setStep: (step, skipCheck) => { dispatch(setStep(step, skipCheck)) },
     youtubeSearch: (track) => { dispatch(youtubeSearch(track)) },
+    spotifyGetPlaylistTracks: (accessToken, playlist) => { dispatch(spotifyGetPlaylistTracks(accessToken, playlist)) }
   }
 }
 
