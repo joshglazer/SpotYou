@@ -6,7 +6,7 @@ import { search } from '../api/youtube';
 const initialState = {
   step: 1,
   spotifyAccessToken: false,
-  playlists: [],
+  playlists: {},
   playlistSelected: null,
   playlistSelectedTracks: [],
   video: null,

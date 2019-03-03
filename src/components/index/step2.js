@@ -23,13 +23,22 @@ class Step2 extends Component {
           2. Choose a playlist
         </h2>
         <div className="step-content">
-          { this.props.playlists.length > 0 &&
+          { this.props.playlists.items &&
             <div className="flex flex-wrap">
               <p className='w-full text-xl mb-4'>
-                Click on one of your playlists to watch music videos for the tracks on that playlist.
+                { this.props.playlists.defaults &&
+                  <span>
+                    You have not followed or created any playlists.<br /><br />Click on one of my favorite playlists below to watch music videos for its tracks, or go follow one on your own and click refresh.
+                  </span>
+                }
+                { !this.props.playlists.defaults &&
+                  <span>
+                    Click on one of your playlists to watch music videos for the tracks on that playlist.
+                  </span>
+                }
               </p>
               {
-                this.props.playlists.map(function(playlist, index) {
+                this.props.playlists.items.map(function(playlist, index) {
                   return (
                     <div key={index} className="w-full md:w-1/2 lg:w-1/3 cursor-pointer" onClick={() => this.props.spotifyGetPlaylistTracks(this.props.spotifyAccessToken, playlist)}>
                       <div className="m-2 flex bg-white rounded overflow-hidden border-grey-light text-left">
@@ -52,11 +61,6 @@ class Step2 extends Component {
                   )
                 }, this)
               }
-            </div>
-          }
-          { this.props.playlists.length === 0 &&
-            <div>
-              You have not followed or created any playlists.  Go follow one and click refresh below.
             </div>
           }
           <button className="btn text-xl mt-6" onClick={() => this.props.spotifyGetPlaylists(this.props.spotifyAccessToken)}>

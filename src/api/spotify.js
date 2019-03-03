@@ -13,8 +13,8 @@ export function authorizeUrl(location) {
 
 export async function getPlaylists(accessToken) {
   const playlistsUrl = 'https://api.spotify.com/v1/me/playlists';
-  const data = await makeApiCall(accessToken, playlistsUrl);
-
+  let data = await makeApiCall(accessToken, playlistsUrl);
+  data.defaults = false;
   // this is the result of a bad access token
   if (!data.items) {
     return []
@@ -22,12 +22,13 @@ export async function getPlaylists(accessToken) {
 
   // if the user does not have any playlists, show them a few defaults
   if (data.items.length === 0) {
+    data.defaults = true;
     const defaultPlaylistIDs = [
       '37i9dQZF1DX6Rl8uES4jYu',
       '37i9dQZF1DX7KNKjOK0o75',
       '37i9dQZF1DXbTxeAdrVG2l'
     ];
-    data.items = Promise.all(defaultPlaylistIDs.map(async function(defaultPlaylistID, index) {
+    data.items = await Promise.all(defaultPlaylistIDs.map(async function(defaultPlaylistID, index) {
       const defaultPlaylistUrl = `https://api.spotify.com/v1/playlists/${defaultPlaylistID}`;
       const defaultPlaylistData = await makeApiCall(accessToken, defaultPlaylistUrl);
       return defaultPlaylistData;
@@ -35,7 +36,7 @@ export async function getPlaylists(accessToken) {
       return defaultPlaylistData;
     });
   }
-  return data.items;
+  return data;
 }
 
 export async function getPlaylistTracks(accessToken, playlistUrl) {
