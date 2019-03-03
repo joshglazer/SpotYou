@@ -24,10 +24,6 @@ class IndexPage extends Component {
     }
   }
 
-  spotifyWarnToast() {
-    toast.warn('Uh Oh! Your connection to spotify has expired. Please reconnect and try again!');
-  }
-
   render() {
     return (
       <Layout>
