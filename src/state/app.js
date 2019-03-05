@@ -8,7 +8,7 @@ const initialState = {
   spotifyAccessToken: false,
   playlists: {},
   playlistSelected: null,
-  playlistSelectedTracks: [],
+  playlistSelectedTracks: {},
   video: null,
 };
 
@@ -59,7 +59,7 @@ export function spotifyGetPlaylists(accessToken) {
 export function spotifyGetPlaylistTracks(accessToken, playlist) {
   return dispatch => {
     getPlaylistTracks(accessToken, playlist.tracks.href).then((tracks) => {
-      if (tracks) {
+      if (tracks.items) {
         ReactGA.event({
           category: 'Playlist',
           action: playlist.id,

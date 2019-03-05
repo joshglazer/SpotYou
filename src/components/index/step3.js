@@ -17,8 +17,17 @@ class Step3 extends Component {
         </h2>
         <div className="step-content">
           <p className='w-full mb-4 text-xl'>
-            Click on a song to watch its music video.
-            </p>
+          { this.props.playlistSelectedTracks.defaults &&
+            <span>
+              Your playlist does not have any tracks yet.<br /><br />Click on one of my favorite tracks below to watch its music videos, or go add some tracks to your playlist and click refresh.
+            </span>
+          }
+          { !this.props.playlistSelectedTracks.defaults &&
+            <span>
+              Click on a song to watch its music video.
+            </span>
+          }
+          </p>
           { this.props.playlistSelected &&
             <div>
               <div className="flex flex-wrap">
@@ -48,7 +57,7 @@ class Step3 extends Component {
                 </div>
                 <div className="w-full md:w-1/2">
                   {
-                    this.props.playlistSelectedTracks && this.props.playlistSelectedTracks.map(function(track, index) {
+                    this.props.playlistSelectedTracks.items && this.props.playlistSelectedTracks.items.map(function(track, index) {
                       return (
                         <div className="bg-white rounded overflow-hidden border-grey-light text-left text-black p-4 m-2 cursor-pointer" key={index} onClick={() => this.props.youtubeSearch(track)}>
                           <div className="font-bold text-xl">{track.track.name}</div>

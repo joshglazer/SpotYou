@@ -17,7 +17,7 @@ export async function getPlaylists(accessToken) {
   data.defaults = false;
   // this is the result of a bad access token
   if (!data.items) {
-    return []
+    return {}
   }
 
   // if the user does not have any playlists, show them a few defaults
@@ -41,7 +41,30 @@ export async function getPlaylists(accessToken) {
 
 export async function getPlaylistTracks(accessToken, playlistUrl) {
   const data = await makeApiCall(accessToken, playlistUrl);
-  return data.items;
+  data.defaults = false;
+  // this is the result of a bad access token
+  if (!data.items) {
+    return {}
+  }
+
+  // if the user does not have any playlists, show them a few defaults
+  if (data.items.length === 0) {
+    data.defaults = true;
+    const defaultTrackIDs = [
+      '7hQJA50XrCWABAu5v6QZ4i',
+      '4CbUtLtAcgLJ7mAIeooJS8',
+      '0lnxrQAd9ZxbhBBe7d8FO8'
+    ];
+    const defaultTracksUrl = `https://api.spotify.com/v1/tracks?ids=${defaultTrackIDs.join()}`;
+    const defaultTracksData = await makeApiCall(accessToken, defaultTracksUrl);
+    defaultTracksData.tracks.map(function(track) {
+      data.items.push({
+        'track': track
+      })
+      return true;
+    })
+  }
+  return data;
 }
 
 async function makeApiCall(accessToken, url) {
