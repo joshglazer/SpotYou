@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FaGithub } from 'react-icons/fa';
-import { StaticQuery, graphql } from 'gatsby'
+import { Link, StaticQuery, graphql } from 'gatsby'
 
 import Header from './header'
 import SEO from '../components/seo';
@@ -46,6 +46,8 @@ const Layout = ({ children }) => (
             </p>
 
             <p className="w-full md:w-1/2 text-white text-center md:text-right">
+              <Link className="font-bold no-underline text-white" to="/privacy-policy/">Privacy Policy</Link>
+              &nbsp;&nbsp;|&nbsp;&nbsp;
               <a
                 href="https://github.com/joshglazer/SpotYou"
                 className="font-bold no-underline text-white"
